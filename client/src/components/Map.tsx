@@ -134,11 +134,11 @@ export function MapView({
     map.current = new window.google.maps.Map(mapContainer.current, {
       zoom: initialZoom,
       center: initialCenter,
-      mapTypeControl: true,
-      fullscreenControl: true,
+      mapTypeControl: false,
+      fullscreenControl: false,
       zoomControl: true,
-      streetViewControl: true,
-      mapId: "DEMO_MAP_ID",
+      streetViewControl: false,
+      // NOTE: mapId intentionally omitted — custom styles via setOptions({ styles }) require no mapId
     });
     if (onMapReady) {
       onMapReady(map.current);
