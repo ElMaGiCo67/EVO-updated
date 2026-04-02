@@ -52,35 +52,11 @@ export default function Navbar() {
               onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
               className="flex flex-col items-start gap-0"
             >
-              <span
-                className="text-white font-black tracking-widest"
-                style={{
-                  fontFamily: "'Barlow Condensed', sans-serif",
-                  fontSize: "1.8rem",
-                  lineHeight: 1,
-                  letterSpacing: "0.15em",
-                }}
-              >
-                EVO
-              </span>
-              <div
-                className="w-full h-0.5"
-                style={{
-                  background: "oklch(0.82 0.18 200)",
-                  boxShadow: "0 0 8px oklch(0.82 0.18 200 / 80%)",
-                }}
+              <img
+                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663173010095/7NSEthpyvre9erajCMjcgy/evo-logo_df6828bb.png"
+                alt="EVO Maritime Services & Logistics"
+                style={{ height: "48px", width: "auto", objectFit: "contain" }}
               />
-              <span
-                className="text-white/60"
-                style={{
-                  fontFamily: "'Barlow Condensed', sans-serif",
-                  fontSize: "0.55rem",
-                  letterSpacing: "0.18em",
-                  textTransform: "uppercase",
-                }}
-              >
-                Maritime Services &amp; Logistics
-              </span>
             </a>
 
             {/* Desktop Nav */}
