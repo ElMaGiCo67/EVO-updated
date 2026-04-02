@@ -52,40 +52,45 @@ export default function Navbar() {
               onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
               className="flex flex-col items-start gap-0.5"
             >
-              {/* EVO wordmark — bold italic, navy pill background, matching uploaded logo style */}
-              <div
-                style={{
-                  background: "linear-gradient(135deg, oklch(0.16 0.04 240) 0%, oklch(0.12 0.05 230) 100%)",
-                  border: "1px solid oklch(0.82 0.18 200 / 20%)",
-                  borderRadius: "4px",
-                  padding: "2px 10px 4px 10px",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "flex-start",
-                  gap: "2px",
-                }}
-              >
-                <span
-                  style={{
-                    fontFamily: "'Barlow Condensed', sans-serif",
-                    fontSize: "1.85rem",
-                    fontWeight: 900,
-                    fontStyle: "italic",
-                    color: "#ffffff",
-                    lineHeight: 1,
-                    letterSpacing: "0.04em",
-                    textShadow: "0 0 20px oklch(0.82 0.18 200 / 30%)",
-                  }}
+              {/* EVO wordmark — SVG with gradient fill matching the uploaded logo */}
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "3px" }}>
+                <svg
+                  width="110"
+                  height="44"
+                  viewBox="0 0 110 44"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style={{ display: "block", filter: "drop-shadow(0 0 8px rgba(100,180,255,0.35))" }}
                 >
-                  EVO
-                </span>
+                  <defs>
+                    {/* White-center, blue-edge vertical gradient matching the image letterforms */}
+                    <linearGradient id="evoLetterGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#b8d8f8" />
+                      <stop offset="30%" stopColor="#ffffff" />
+                      <stop offset="65%" stopColor="#ffffff" />
+                      <stop offset="100%" stopColor="#7ab4e8" />
+                    </linearGradient>
+                  </defs>
+                  <text
+                    x="4"
+                    y="38"
+                    fontFamily="'Barlow Condensed', 'Arial Narrow', sans-serif"
+                    fontSize="46"
+                    fontWeight="900"
+                    fontStyle="italic"
+                    fill="url(#evoLetterGrad)"
+                    letterSpacing="2"
+                    style={{ textTransform: "uppercase" }}
+                  >
+                    EVO
+                  </text>
+                </svg>
                 {/* Cyan glowing underline bar */}
                 <div
                   style={{
-                    width: "100%",
+                    width: "110px",
                     height: "3px",
-                    background: "linear-gradient(90deg, oklch(0.82 0.18 200), oklch(0.70 0.20 210))",
-                    boxShadow: "0 0 8px oklch(0.82 0.18 200 / 90%), 0 0 16px oklch(0.82 0.18 200 / 50%)",
+                    background: "linear-gradient(90deg, #00d4ff, #0099cc)",
+                    boxShadow: "0 0 8px rgba(0,212,255,0.9), 0 0 18px rgba(0,212,255,0.5)",
                     borderRadius: "2px",
                   }}
                 />
