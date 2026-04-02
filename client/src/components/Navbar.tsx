@@ -50,13 +50,59 @@ export default function Navbar() {
             <a
               href="#"
               onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-              className="flex flex-col items-start gap-0"
+              className="flex flex-col items-start gap-0.5"
             >
-              <img
-                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663173010095/7NSEthpyvre9erajCMjcgy/evo-logo_df6828bb.png"
-                alt="EVO Maritime Services & Logistics"
-                style={{ height: "48px", width: "auto", objectFit: "contain" }}
-              />
+              {/* EVO wordmark — bold italic, navy pill background, matching uploaded logo style */}
+              <div
+                style={{
+                  background: "linear-gradient(135deg, oklch(0.16 0.04 240) 0%, oklch(0.12 0.05 230) 100%)",
+                  border: "1px solid oklch(0.82 0.18 200 / 20%)",
+                  borderRadius: "4px",
+                  padding: "2px 10px 4px 10px",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                  gap: "2px",
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: "'Barlow Condensed', sans-serif",
+                    fontSize: "1.85rem",
+                    fontWeight: 900,
+                    fontStyle: "italic",
+                    color: "#ffffff",
+                    lineHeight: 1,
+                    letterSpacing: "0.04em",
+                    textShadow: "0 0 20px oklch(0.82 0.18 200 / 30%)",
+                  }}
+                >
+                  EVO
+                </span>
+                {/* Cyan glowing underline bar */}
+                <div
+                  style={{
+                    width: "100%",
+                    height: "3px",
+                    background: "linear-gradient(90deg, oklch(0.82 0.18 200), oklch(0.70 0.20 210))",
+                    boxShadow: "0 0 8px oklch(0.82 0.18 200 / 90%), 0 0 16px oklch(0.82 0.18 200 / 50%)",
+                    borderRadius: "2px",
+                  }}
+                />
+              </div>
+              <span
+                style={{
+                  fontFamily: "'Barlow Condensed', sans-serif",
+                  fontSize: "0.52rem",
+                  fontWeight: 500,
+                  letterSpacing: "0.18em",
+                  textTransform: "uppercase",
+                  color: "oklch(0.82 0.18 200 / 80%)",
+                  paddingLeft: "2px",
+                }}
+              >
+                Maritime Services &amp; Logistics
+              </span>
             </a>
 
             {/* Desktop Nav */}
