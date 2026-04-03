@@ -30,7 +30,7 @@ export default function ServicesTicker() {
         borderBottom: "1px solid oklch(0.82 0.18 200 / 20%)",
       }}
     >
-      <div className="ticker-track flex items-center gap-0 whitespace-nowrap">
+      <div className="ticker-track items-center whitespace-nowrap">
         {doubled.map((item, i) => (
           <span key={i} className="flex items-center">
             <span

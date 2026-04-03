@@ -307,7 +307,11 @@
   }
 
   .ticker-track {
+    display: flex;
+    flex-wrap: nowrap;
+    width: max-content;
     animation: ticker 30s linear infinite;
+    will-change: transform;
   }
 
   .ticker-track:hover {

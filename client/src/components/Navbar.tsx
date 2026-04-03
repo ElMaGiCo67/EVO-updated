@@ -50,24 +50,44 @@ export default function Navbar() {
             <a
               href="#"
               onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-              className="flex flex-col items-center gap-0.5"
+              className="flex flex-col items-start gap-0.5"
             >
-              {/* EVO wordmark — exact letterforms from brand image, transparent PNG on dark nav */}
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "3px" }}>
-                <img
-                  src="https://d2xsxph8kpxj0f.cloudfront.net/310519663173010095/7NSEthpyvre9erajCMjcgy/evo-letters_cf9113fd.png"
-                  alt="EVO"
-                  style={{
-                    height: "44px",
-                    width: "auto",
-                    objectFit: "contain",
-                    filter: "drop-shadow(0 0 6px rgba(100,180,255,0.4))",
-                  }}
-                />
+              {/* EVO wordmark — SVG with gradient fill matching the uploaded logo */}
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "3px" }}>
+                <svg
+                  width="110"
+                  height="44"
+                  viewBox="0 0 110 44"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style={{ display: "block", filter: "drop-shadow(0 0 8px rgba(100,180,255,0.35))" }}
+                >
+                  <defs>
+                    {/* White-center, blue-edge vertical gradient matching the image letterforms */}
+                    <linearGradient id="evoLetterGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#b8d8f8" />
+                      <stop offset="30%" stopColor="#ffffff" />
+                      <stop offset="65%" stopColor="#ffffff" />
+                      <stop offset="100%" stopColor="#7ab4e8" />
+                    </linearGradient>
+                  </defs>
+                  <text
+                    x="4"
+                    y="38"
+                    fontFamily="'Barlow Condensed', 'Arial Narrow', sans-serif"
+                    fontSize="46"
+                    fontWeight="900"
+                    fontStyle="italic"
+                    fill="url(#evoLetterGrad)"
+                    letterSpacing="2"
+                    style={{ textTransform: "uppercase" }}
+                  >
+                    EVO
+                  </text>
+                </svg>
                 {/* Cyan glowing underline bar */}
                 <div
                   style={{
-                    width: "100%",
+                    width: "110px",
                     height: "3px",
                     background: "linear-gradient(90deg, #00d4ff, #0099cc)",
                     boxShadow: "0 0 8px rgba(0,212,255,0.9), 0 0 18px rgba(0,212,255,0.5)",
@@ -83,7 +103,7 @@ export default function Navbar() {
                   letterSpacing: "0.18em",
                   textTransform: "uppercase",
                   color: "oklch(0.82 0.18 200 / 80%)",
-                  textAlign: "center",
+                  paddingLeft: "2px",
                 }}
               >
                 Maritime Services &amp; Logistics
