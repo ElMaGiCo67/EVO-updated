@@ -50,10 +50,10 @@ export default function Navbar() {
             <a
               href="#"
               onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-              className="flex flex-col items-start gap-0.5"
+              className="flex flex-col items-center gap-0.5"
             >
               {/* EVO wordmark — exact letterforms from brand image, transparent PNG on dark nav */}
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "3px" }}>
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "3px" }}>
                 <img
                   src="https://d2xsxph8kpxj0f.cloudfront.net/310519663173010095/7NSEthpyvre9erajCMjcgy/evo-letters_cf9113fd.png"
                   alt="EVO"
@@ -83,7 +83,7 @@ export default function Navbar() {
                   letterSpacing: "0.18em",
                   textTransform: "uppercase",
                   color: "oklch(0.82 0.18 200 / 80%)",
-                  paddingLeft: "2px",
+                  textAlign: "center",
                 }}
               >
                 Maritime Services &amp; Logistics
