@@ -5,7 +5,8 @@
 */
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Phone, Mail } from "lucide-react";
+import { Menu, X, Mail, Sun, Moon, Phone } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const navLinks = [
   { label: "About", href: "#about" },
@@ -19,6 +20,7 @@ const navLinks = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
@@ -114,6 +116,30 @@ export default function Navbar() {
                 <Mail size={14} />
                 office@evo-maritime.com
               </a>
+              {/* Theme Toggle */}
+              <button
+                onClick={toggleTheme}
+                aria-label="Toggle light/dark mode"
+                title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "36px",
+                  height: "36px",
+                  borderRadius: "4px",
+                  border: "1px solid oklch(0.82 0.18 200 / 40%)",
+                  background: "transparent",
+                  color: "oklch(0.82 0.18 200)",
+                  cursor: "pointer",
+                  transition: "all 0.2s ease",
+                  flexShrink: 0,
+                }}
+                onMouseEnter={e => (e.currentTarget.style.background = "oklch(0.82 0.18 200 / 12%)")}
+                onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
+              >
+                {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+              </button>
               <a
                 href="#contact"
                 onClick={(e) => { e.preventDefault(); handleNavClick("#contact"); }}
