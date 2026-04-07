@@ -18,17 +18,36 @@ export default function ContactSection() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSending(true);
+
+    const subject = encodeURIComponent(
+      `Quote Request — ${form.cargo || "Cargo"} | ${form.company || form.name}`
+    );
+    const body = encodeURIComponent(
+      `Quote Request from EVO Maritime Website\n` +
+      `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+      `Name:     ${form.name}\n` +
+      `Company:  ${form.company}\n` +
+      `Email:    ${form.email}\n` +
+      `Phone:    ${form.phone}\n` +
+      `Cargo:    ${form.cargo}\n` +
+      `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+      `Message:\n${form.message}\n`
+    );
+
+    window.location.href = `mailto:office@evo-maritime.com?subject=${subject}&body=${body}`;
+
     setTimeout(() => {
       setSending(false);
-      toast.success("Message sent! We'll be in touch within 24 hours.", {
+      toast.success("Your email client has opened — please send the pre-filled message.", {
         style: {
           background: "oklch(0.14 0.04 240)",
           color: "white",
           border: "1px solid oklch(0.82 0.18 200 / 40%)",
         },
+        duration: 6000,
       });
       setForm({ name: "", company: "", email: "", phone: "", cargo: "", message: "" });
-    }, 1200);
+    }, 400);
   };
 
   const inputStyle = {
