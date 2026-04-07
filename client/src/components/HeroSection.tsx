@@ -2,10 +2,13 @@
   EVO Maritime Hero Section
   Design: Full-bleed port aerial background, dramatic left-aligned headline,
   Barlow Condensed ExtraBold display type, cyan accent line, stat callouts
+  Theme-aware: dark = dramatic night port / light = same photo with lighter overlay
 */
 import { motion } from "framer-motion";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { useTheme } from "@/contexts/ThemeContext";
+import { getTokens } from "@/lib/theme-tokens";
 
 const HERO_BG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663173010095/7NSEthpyvre9erajCMjcgy/evo-hero-bg-XV8jyJQoLEUPCVaWuP6RsD.webp";
 
@@ -44,6 +47,10 @@ function CountUp({ target, suffix = "" }: { target: number; suffix?: string }) {
 }
 
 export default function HeroSection() {
+  const { theme } = useTheme();
+  const t = getTokens(theme);
+  const isDark = theme === "dark";
+
   const handleScrollDown = () => {
     const el = document.querySelector("#about");
     if (el) el.scrollIntoView({ behavior: "smooth" });
@@ -52,24 +59,26 @@ export default function HeroSection() {
   return (
     <section
       className="relative min-h-screen flex flex-col justify-center overflow-hidden"
-      style={{ background: "oklch(0.08 0.03 240)" }}
+      style={{ background: isDark ? "oklch(0.08 0.03 240)" : "oklch(0.88 0.012 240)" }}
     >
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${HERO_BG})` }}
       />
-      {/* Dark overlay gradient */}
+      {/* Overlay — darker in dark mode, lighter tint in light mode */}
       <div
         className="absolute inset-0"
         style={{
-          background: "linear-gradient(105deg, oklch(0.07 0.03 240 / 92%) 0%, oklch(0.07 0.03 240 / 75%) 50%, oklch(0.07 0.03 240 / 55%) 100%)",
+          background: isDark
+            ? "linear-gradient(105deg, oklch(0.07 0.03 240 / 92%) 0%, oklch(0.07 0.03 240 / 75%) 50%, oklch(0.07 0.03 240 / 55%) 100%)"
+            : "linear-gradient(105deg, oklch(0.92 0.012 240 / 88%) 0%, oklch(0.90 0.012 240 / 72%) 50%, oklch(0.88 0.010 240 / 50%) 100%)",
         }}
       />
       {/* Bottom fade */}
       <div
         className="absolute bottom-0 left-0 right-0 h-32"
-        style={{ background: "linear-gradient(to bottom, transparent, oklch(0.10 0.03 240))" }}
+        style={{ background: `linear-gradient(to bottom, transparent, ${isDark ? "oklch(0.10 0.03 240)" : "oklch(0.96 0.006 240)"})` }}
       />
 
       {/* Content */}
@@ -84,16 +93,16 @@ export default function HeroSection() {
           >
             <div
               className="h-px w-12"
-              style={{ background: "oklch(0.82 0.18 200)", boxShadow: "0 0 8px oklch(0.82 0.18 200 / 80%)" }}
+              style={{ background: t.cyan, boxShadow: `0 0 8px ${t.cyanGlow}` }}
             />
             <span
-              className="evo-cyan"
               style={{
                 fontFamily: "'Barlow Condensed', sans-serif",
                 fontWeight: 600,
                 fontSize: "0.85rem",
                 letterSpacing: "0.2em",
                 textTransform: "uppercase",
+                color: t.cyan,
               }}
             >
               Evolution in Maritime Logistics
@@ -115,11 +124,11 @@ export default function HeroSection() {
               letterSpacing: "0.02em",
             }}
           >
-            <span className="text-white block">Let's Move</span>
+            <span style={{ color: t.textPrimary, display: "block" }}>Let's Move</span>
             <span
               style={{
-                color: "oklch(0.82 0.18 200)",
-                textShadow: "0 0 40px oklch(0.82 0.18 200 / 40%)",
+                color: t.cyan,
+                textShadow: `0 0 40px ${t.cyanGlow}`,
                 display: "block",
               }}
             >
@@ -132,12 +141,13 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.65 }}
-            className="text-white/70 mb-10 max-w-xl"
+            className="mb-10 max-w-xl"
             style={{
               fontFamily: "'Barlow', sans-serif",
               fontWeight: 400,
               fontSize: "1.1rem",
               lineHeight: 1.6,
+              color: t.textSecondary,
             }}
           >
             Specialized maritime logistics across Southeast Europe — Ocean Chartering,
@@ -183,25 +193,26 @@ export default function HeroSection() {
             ].map((stat) => (
               <div key={stat.label} className="flex flex-col">
                 <span
-                  className="evo-cyan"
                   style={{
                     fontFamily: "'Barlow Condensed', sans-serif",
                     fontWeight: 900,
                     fontSize: "2.5rem",
                     lineHeight: 1,
-                    textShadow: "0 0 20px oklch(0.82 0.18 200 / 50%)",
+                    color: t.cyan,
+                    textShadow: `0 0 20px ${t.cyanGlow}`,
                   }}
                 >
                   <CountUp target={stat.value} suffix={stat.suffix} />
                 </span>
                 <span
-                  className="text-white/50 mt-1"
                   style={{
                     fontFamily: "'Barlow Condensed', sans-serif",
                     fontWeight: 600,
                     fontSize: "0.7rem",
                     letterSpacing: "0.12em",
                     textTransform: "uppercase",
+                    color: t.textMuted,
+                    marginTop: "4px",
                   }}
                 >
                   {stat.label}
@@ -218,7 +229,8 @@ export default function HeroSection() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40 hover:text-white/70 transition-colors z-10"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 transition-colors z-10"
+        style={{ color: t.textMuted }}
       >
         <span
           style={{

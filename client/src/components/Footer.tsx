@@ -1,10 +1,16 @@
 /*
   EVO Maritime Footer
-  Design: Deep navy, EVO logo, links, copyright, tagline
+  Design: Deep navy / light steel, EVO logo, links, copyright, tagline
+  Theme-aware: uses getTokens for all colors
 */
 import { Mail, Phone } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
+import { getTokens } from "@/lib/theme-tokens";
 
 export default function Footer() {
+  const { theme } = useTheme();
+  const t = getTokens(theme);
+
   const handleNavClick = (href: string) => {
     const el = document.querySelector(href);
     if (el) el.scrollIntoView({ behavior: "smooth" });
@@ -12,10 +18,10 @@ export default function Footer() {
 
   return (
     <footer
-      className="py-12 border-t"
+      className="py-12"
       style={{
-        background: "oklch(0.08 0.03 240)",
-        borderColor: "oklch(1 0 0 / 8%)",
+        background: t.bgFooter,
+        borderTop: `1px solid ${t.borderSubtle}`,
       }}
     >
       <div className="container">
@@ -23,7 +29,6 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-2">
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "3px", marginBottom: "1rem" }}>
-              {/* EVO image-based logo — same as navbar */}
               <img
                 src="https://d2xsxph8kpxj0f.cloudfront.net/310519663173010095/7NSEthpyvre9erajCMjcgy/evo-letters_cf9113fd.png"
                 alt="EVO"
@@ -31,10 +36,11 @@ export default function Footer() {
                   height: "52px",
                   width: "auto",
                   display: "block",
-                  filter: "drop-shadow(0 0 6px rgba(100,180,255,0.4))",
+                  filter: theme === "light"
+                    ? "drop-shadow(0 0 6px rgba(0,100,180,0.3)) brightness(0.7) saturate(1.5)"
+                    : "drop-shadow(0 0 6px rgba(100,180,255,0.4))",
                 }}
               />
-              {/* Cyan glowing underline bar */}
               <div
                 style={{
                   width: "100%",
@@ -44,7 +50,6 @@ export default function Footer() {
                   borderRadius: "2px",
                 }}
               />
-              {/* Centered subtitle */}
               <span
                 style={{
                   fontFamily: "'Barlow Condensed', sans-serif",
@@ -52,7 +57,7 @@ export default function Footer() {
                   fontWeight: 500,
                   letterSpacing: "0.18em",
                   textTransform: "uppercase",
-                  color: "oklch(0.82 0.18 200 / 80%)",
+                  color: t.cyan,
                   textAlign: "center",
                 }}
               >
@@ -60,11 +65,12 @@ export default function Footer() {
               </span>
             </div>
             <p
-              className="text-white/40 max-w-xs"
               style={{
                 fontFamily: "'Barlow', sans-serif",
                 fontSize: "0.85rem",
                 lineHeight: 1.65,
+                color: t.textWhite40,
+                maxWidth: "20rem",
               }}
             >
               Evolution in Maritime Logistics. Four strategic hubs across Southeast Europe,
@@ -75,13 +81,14 @@ export default function Footer() {
           {/* Navigation */}
           <div>
             <h4
-              className="text-white/60 mb-4"
               style={{
                 fontFamily: "'Barlow Condensed', sans-serif",
                 fontWeight: 700,
                 fontSize: "0.72rem",
                 letterSpacing: "0.18em",
                 textTransform: "uppercase",
+                color: t.textMuted,
+                marginBottom: "1rem",
               }}
             >
               Navigation
@@ -99,11 +106,15 @@ export default function Footer() {
                   <a
                     href={link.href}
                     onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
-                    className="text-white/40 hover:text-white transition-colors"
                     style={{
                       fontFamily: "'Barlow', sans-serif",
                       fontSize: "0.88rem",
+                      color: t.textWhite40,
+                      textDecoration: "none",
+                      transition: "color 0.2s ease",
                     }}
+                    onMouseEnter={e => (e.currentTarget.style.color = t.textPrimary)}
+                    onMouseLeave={e => (e.currentTarget.style.color = t.textWhite40)}
                   >
                     {link.label}
                   </a>
@@ -115,54 +126,37 @@ export default function Footer() {
           {/* Contact */}
           <div>
             <h4
-              className="text-white/60 mb-4"
               style={{
                 fontFamily: "'Barlow Condensed', sans-serif",
                 fontWeight: 700,
                 fontSize: "0.72rem",
                 letterSpacing: "0.18em",
                 textTransform: "uppercase",
+                color: t.textMuted,
+                marginBottom: "1rem",
               }}
             >
               Contact
             </h4>
             <div className="space-y-3">
-              <a
-                href="mailto:office@evo-maritime.com"
-                className="flex items-center gap-2 text-white/40 hover:text-white transition-colors"
-              >
-                <Mail size={13} />
-                <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: "0.85rem" }}>
-                  office@evo-maritime.com
-                </span>
-              </a>
-              <a
-                href="tel:+35952300098"
-                className="flex items-center gap-2 text-white/40 hover:text-white transition-colors"
-              >
-                <Phone size={13} />
-                <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: "0.85rem" }}>
-                  +359 52 300098
-                </span>
-              </a>
-              <a
-                href="tel:+40372903325"
-                className="flex items-center gap-2 text-white/40 hover:text-white transition-colors"
-              >
-                <Phone size={13} />
-                <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: "0.85rem" }}>
-                  +40 372 903325
-                </span>
-              </a>
-              <a
-                href="tel:+381114540071"
-                className="flex items-center gap-2 text-white/40 hover:text-white transition-colors"
-              >
-                <Phone size={13} />
-                <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: "0.85rem" }}>
-                  +381 114540071
-                </span>
-              </a>
+              {[
+                { href: "mailto:office@evo-maritime.com", icon: <Mail size={13} />, label: "office@evo-maritime.com" },
+                { href: "tel:+35952300098", icon: <Phone size={13} />, label: "+359 52 300098" },
+                { href: "tel:+40372903325", icon: <Phone size={13} />, label: "+40 372 903325" },
+                { href: "tel:+381114540071", icon: <Phone size={13} />, label: "+381 114540071" },
+              ].map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className="flex items-center gap-2"
+                  style={{ color: t.textWhite40, textDecoration: "none", transition: "color 0.2s ease" }}
+                  onMouseEnter={e => (e.currentTarget.style.color = t.textPrimary)}
+                  onMouseLeave={e => (e.currentTarget.style.color = t.textWhite40)}
+                >
+                  {item.icon}
+                  <span style={{ fontFamily: "'Barlow', sans-serif", fontSize: "0.85rem" }}>{item.label}</span>
+                </a>
+              ))}
             </div>
           </div>
         </div>
@@ -170,22 +164,21 @@ export default function Footer() {
         {/* Bottom bar */}
         <div
           className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4"
-          style={{ borderTop: "1px solid oklch(1 0 0 / 8%)" }}
+          style={{ borderTop: `1px solid ${t.borderSubtle}` }}
         >
           <span
-            className="text-white/25"
-            style={{ fontFamily: "'Barlow', sans-serif", fontSize: "0.8rem" }}
+            style={{ fontFamily: "'Barlow', sans-serif", fontSize: "0.8rem", color: t.textWhite30 }}
           >
             © {new Date().getFullYear()} EVO Maritime Services & Logistics. All rights reserved.
           </span>
           <span
-            className="evo-cyan"
             style={{
               fontFamily: "'Barlow Condensed', sans-serif",
               fontWeight: 600,
               fontSize: "0.72rem",
               letterSpacing: "0.2em",
               textTransform: "uppercase",
+              color: t.cyan,
             }}
           >
             Evolution in Maritime Logistics

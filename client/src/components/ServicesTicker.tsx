@@ -1,9 +1,15 @@
 /*
   EVO Maritime Services Ticker
   Design: Horizontal scrolling marquee of service names, cyan separator dots
-  Dark background strip, Barlow Condensed uppercase
+  Theme-aware: dark navy strip / light steel strip
 */
+import { useTheme } from "@/contexts/ThemeContext";
+import { getTokens } from "@/lib/theme-tokens";
+
 export default function ServicesTicker() {
+  const { theme } = useTheme();
+  const t = getTokens(theme);
+
   const items = [
     "Ocean Chartering",
     "River Chartering",
@@ -25,9 +31,9 @@ export default function ServicesTicker() {
     <div
       className="overflow-hidden py-4"
       style={{
-        background: "oklch(0.82 0.18 200 / 8%)",
-        borderTop: "1px solid oklch(0.82 0.18 200 / 20%)",
-        borderBottom: "1px solid oklch(0.82 0.18 200 / 20%)",
+        background: t.cyanBg,
+        borderTop: `1px solid ${t.borderCard}`,
+        borderBottom: `1px solid ${t.borderCard}`,
       }}
     >
       <div className="ticker-track items-center whitespace-nowrap">
@@ -41,14 +47,14 @@ export default function ServicesTicker() {
                 fontSize: "0.8rem",
                 letterSpacing: "0.15em",
                 textTransform: "uppercase",
-                color: "oklch(0.82 0.18 200)",
+                color: t.cyan,
               }}
             >
               {item}
             </span>
             <span
               style={{
-                color: "oklch(0.82 0.18 200 / 40%)",
+                color: t.dividerLine,
                 fontSize: "0.6rem",
               }}
             >

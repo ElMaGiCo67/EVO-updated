@@ -1,13 +1,15 @@
 /*
   EVO Maritime Our Work / Case Studies Section
-  Design: Dark navy background, horizontal split-screen cards (tag | data | description)
+  Design: Dark navy / light steel, horizontal split-screen cards
   Cyan accent numbers, Barlow Condensed headings, staggered scroll reveal
-  Each card has real project photos — click thumbnail or "View Photos" to open lightbox
+  Theme-aware: uses getTokens for all colors
 */
 import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState, useEffect, useCallback } from "react";
-import { Wind, Anchor, Ship, Package, Waves, Factory, Truck, Wheat, X, ChevronLeft, ChevronRight, Camera } from "lucide-react";
+import { Wind, Anchor, Package, Truck, Wheat, X, ChevronLeft, ChevronRight, Camera, Factory } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
+import { getTokens } from "@/lib/theme-tokens";
 
 const CASESTUDY_BG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663173010095/7NSEthpyvre9erajCMjcgy/evo-casestudy-bg-ZJ5MF24pgBqvgfDqVvX3yS.webp";
 
@@ -146,7 +148,6 @@ interface LightboxProps {
 
 function Lightbox({ photos, startIndex, title, onClose }: LightboxProps) {
   const [current, setCurrent] = useState(startIndex);
-
   const prev = useCallback(() => setCurrent((c) => (c - 1 + photos.length) % photos.length), [photos.length]);
   const next = useCallback(() => setCurrent((c) => (c + 1) % photos.length), [photos.length]);
 
@@ -164,6 +165,10 @@ function Lightbox({ photos, startIndex, title, onClose }: LightboxProps) {
     };
   }, [onClose, prev, next]);
 
+  const CYAN = "oklch(0.82 0.18 200)";
+  const CYAN_BG = "oklch(0.82 0.18 200 / 15%)";
+  const CYAN_BORDER = "oklch(0.82 0.18 200 / 30%)";
+
   return (
     <AnimatePresence>
       <motion.div
@@ -174,40 +179,25 @@ function Lightbox({ photos, startIndex, title, onClose }: LightboxProps) {
         style={{ background: "rgba(4, 10, 24, 0.97)" }}
         onClick={onClose}
       >
-        {/* Close */}
         <button
           className="absolute top-5 right-5 z-10 flex items-center justify-center w-10 h-10 rounded-full"
-          style={{ background: "oklch(0.82 0.18 200 / 15%)", border: "1px solid oklch(0.82 0.18 200 / 30%)" }}
+          style={{ background: CYAN_BG, border: `1px solid ${CYAN_BORDER}` }}
           onClick={onClose}
         >
-          <X size={18} style={{ color: "oklch(0.82 0.18 200)" }} />
+          <X size={18} style={{ color: CYAN }} />
         </button>
 
-        {/* Title + counter */}
-        <div
-          className="absolute top-5 left-5 right-16 z-10"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <p
-            style={{
-              fontFamily: "'Barlow Condensed', sans-serif",
-              fontWeight: 700,
-              fontSize: "1rem",
-              textTransform: "uppercase",
-              letterSpacing: "0.1em",
-              color: "white",
-            }}
-          >
+        <div className="absolute top-5 left-5 right-16 z-10" onClick={(e) => e.stopPropagation()}>
+          <p style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: "1rem", textTransform: "uppercase", letterSpacing: "0.1em", color: "white" }}>
             {title}
           </p>
           {photos.length > 1 && (
-            <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: "0.78rem", color: "oklch(0.82 0.18 200 / 70%)" }}>
+            <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: "0.78rem", color: CYAN }}>
               {current + 1} / {photos.length}
             </p>
           )}
         </div>
 
-        {/* Image */}
         <motion.img
           key={current}
           initial={{ opacity: 0, scale: 0.96 }}
@@ -220,25 +210,22 @@ function Lightbox({ photos, startIndex, title, onClose }: LightboxProps) {
           onClick={(e) => e.stopPropagation()}
         />
 
-        {/* Prev / Next */}
         {photos.length > 1 && (
           <>
             <button
               className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center w-11 h-11 rounded-full"
-              style={{ background: "oklch(0.82 0.18 200 / 15%)", border: "1px solid oklch(0.82 0.18 200 / 30%)" }}
+              style={{ background: CYAN_BG, border: `1px solid ${CYAN_BORDER}` }}
               onClick={(e) => { e.stopPropagation(); prev(); }}
             >
-              <ChevronLeft size={22} style={{ color: "oklch(0.82 0.18 200)" }} />
+              <ChevronLeft size={22} style={{ color: CYAN }} />
             </button>
             <button
               className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center justify-center w-11 h-11 rounded-full"
-              style={{ background: "oklch(0.82 0.18 200 / 15%)", border: "1px solid oklch(0.82 0.18 200 / 30%)" }}
+              style={{ background: CYAN_BG, border: `1px solid ${CYAN_BORDER}` }}
               onClick={(e) => { e.stopPropagation(); next(); }}
             >
-              <ChevronRight size={22} style={{ color: "oklch(0.82 0.18 200)" }} />
+              <ChevronRight size={22} style={{ color: CYAN }} />
             </button>
-
-            {/* Dot indicators */}
             <div className="absolute bottom-6 flex gap-2">
               {photos.map((_, i) => (
                 <button
@@ -248,7 +235,7 @@ function Lightbox({ photos, startIndex, title, onClose }: LightboxProps) {
                     width: i === current ? "20px" : "8px",
                     height: "8px",
                     borderRadius: "4px",
-                    background: i === current ? "oklch(0.82 0.18 200)" : "oklch(0.82 0.18 200 / 30%)",
+                    background: i === current ? CYAN : CYAN_BG,
                     transition: "all 0.2s",
                     border: "none",
                     cursor: "pointer",
@@ -268,10 +255,12 @@ function CaseCard({
   item,
   index,
   onOpenLightbox,
+  t,
 }: {
   item: typeof cases[0];
   index: number;
   onOpenLightbox: (photos: string[], startIndex: number, title: string) => void;
+  t: ReturnType<typeof getTokens>;
 }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
@@ -283,9 +272,16 @@ function CaseCard({
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: (index % 2) * 0.12 }}
-      className="evo-card flex flex-col gap-0 overflow-hidden"
+      className="flex flex-col gap-0 overflow-hidden"
+      style={{
+        background: t.bgCard,
+        border: `1px solid ${t.borderCard}`,
+        transition: "border-color 0.3s ease",
+      }}
+      onMouseEnter={e => (e.currentTarget.style.borderColor = t.borderCardHover)}
+      onMouseLeave={e => (e.currentTarget.style.borderColor = t.borderCard)}
     >
-      {/* Photo thumbnail — clickable */}
+      {/* Photo thumbnail */}
       <div
         className="relative w-full overflow-hidden cursor-pointer group"
         style={{ height: "160px" }}
@@ -296,52 +292,27 @@ function CaseCard({
           alt={item.title}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
-        {/* Overlay on hover */}
         <div
           className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          style={{ background: "rgba(0,212,255,0.18)" }}
+          style={{ background: `${t.cyan}22` }}
         >
           <div
-            className="flex items-center gap-2 px-4 py-2 rounded"
-            style={{
-              background: "rgba(4,10,24,0.85)",
-              border: "1px solid oklch(0.82 0.18 200 / 50%)",
-            }}
+            className="flex items-center gap-2 px-4 py-2"
+            style={{ background: "rgba(4,10,24,0.85)", border: `1px solid ${t.borderCard}` }}
           >
-            <Camera size={14} style={{ color: "oklch(0.82 0.18 200)" }} />
-            <span
-              style={{
-                fontFamily: "'Barlow Condensed', sans-serif",
-                fontWeight: 700,
-                fontSize: "0.72rem",
-                letterSpacing: "0.15em",
-                textTransform: "uppercase",
-                color: "oklch(0.82 0.18 200)",
-              }}
-            >
+            <Camera size={14} style={{ color: t.cyan }} />
+            <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: "0.72rem", letterSpacing: "0.15em", textTransform: "uppercase", color: t.cyan }}>
               {item.photos.length > 1 ? `View ${item.photos.length} Photos` : "View Photo"}
             </span>
           </div>
         </div>
-        {/* Multi-photo badge */}
         {item.photos.length > 1 && (
           <div
-            className="absolute top-2 right-2 flex items-center gap-1 px-2 py-0.5 rounded"
-            style={{
-              background: "rgba(4,10,24,0.85)",
-              border: "1px solid oklch(0.82 0.18 200 / 40%)",
-            }}
+            className="absolute top-2 right-2 flex items-center gap-1 px-2 py-0.5"
+            style={{ background: "rgba(4,10,24,0.85)", border: `1px solid ${t.borderCard}` }}
           >
-            <Camera size={10} style={{ color: "oklch(0.82 0.18 200)" }} />
-            <span
-              style={{
-                fontFamily: "'Barlow Condensed', sans-serif",
-                fontWeight: 700,
-                fontSize: "0.62rem",
-                letterSpacing: "0.1em",
-                color: "oklch(0.82 0.18 200)",
-              }}
-            >
+            <Camera size={10} style={{ color: t.cyan }} />
+            <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: "0.62rem", letterSpacing: "0.1em", color: t.cyan }}>
               {item.photos.length}
             </span>
           </div>
@@ -350,98 +321,43 @@ function CaseCard({
 
       {/* Card body */}
       <div className="p-6 flex flex-col gap-5 flex-1">
-        {/* Header */}
         <div className="flex items-start gap-4">
           <div
             className="flex-shrink-0 w-10 h-10 flex items-center justify-center mt-0.5"
-            style={{
-              border: "1px solid oklch(0.82 0.18 200 / 30%)",
-              background: "oklch(0.82 0.18 200 / 8%)",
-            }}
+            style={{ border: `1px solid ${t.borderCard}`, background: t.iconBg }}
           >
-            <Icon size={18} style={{ color: "oklch(0.82 0.18 200)" }} />
+            <Icon size={18} style={{ color: t.cyan }} />
           </div>
           <div>
-            <span
-              className="evo-cyan block mb-1"
-              style={{
-                fontFamily: "'Barlow Condensed', sans-serif",
-                fontWeight: 600,
-                fontSize: "0.68rem",
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
-              }}
-            >
+            <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: "0.68rem", letterSpacing: "0.18em", textTransform: "uppercase", color: t.cyan, display: "block", marginBottom: "0.25rem" }}>
               {item.tag}
             </span>
-            <h3
-              className="text-white"
-              style={{
-                fontFamily: "'Barlow Condensed', sans-serif",
-                fontWeight: 800,
-                fontSize: "1.1rem",
-                textTransform: "uppercase",
-                letterSpacing: "0.03em",
-                lineHeight: 1.2,
-              }}
-            >
+            <h3 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: "1.1rem", textTransform: "uppercase", letterSpacing: "0.03em", lineHeight: 1.2, color: t.textPrimary }}>
               {item.title}
             </h3>
-            <p
-              className="text-white/40 mt-1"
-              style={{
-                fontFamily: "'Barlow', sans-serif",
-                fontSize: "0.78rem",
-              }}
-            >
+            <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: "0.78rem", color: t.textWhite40, marginTop: "0.25rem" }}>
               {item.route}
             </p>
           </div>
         </div>
 
-        {/* Stats */}
         <div
           className="grid grid-cols-3 gap-2 py-4"
-          style={{ borderTop: "1px solid oklch(1 0 0 / 8%)", borderBottom: "1px solid oklch(1 0 0 / 8%)" }}
+          style={{ borderTop: `1px solid ${t.borderSubtle}`, borderBottom: `1px solid ${t.borderSubtle}` }}
         >
           {item.stats.map((stat) => (
             <div key={stat.label} className="text-center">
-              <div
-                className="evo-cyan"
-                style={{
-                  fontFamily: "'Barlow Condensed', sans-serif",
-                  fontWeight: 900,
-                  fontSize: "1.1rem",
-                  lineHeight: 1,
-                }}
-              >
+              <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 900, fontSize: "1.1rem", lineHeight: 1, color: t.cyan }}>
                 {stat.value}
               </div>
-              <div
-                className="text-white/40 mt-1"
-                style={{
-                  fontFamily: "'Barlow Condensed', sans-serif",
-                  fontWeight: 600,
-                  fontSize: "0.62rem",
-                  letterSpacing: "0.1em",
-                  textTransform: "uppercase",
-                }}
-              >
+              <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: "0.62rem", letterSpacing: "0.1em", textTransform: "uppercase", color: t.textWhite40, marginTop: "0.25rem" }}>
                 {stat.label}
               </div>
             </div>
           ))}
         </div>
 
-        {/* Description */}
-        <p
-          className="text-white/55"
-          style={{
-            fontFamily: "'Barlow', sans-serif",
-            fontSize: "0.85rem",
-            lineHeight: 1.65,
-          }}
-        >
+        <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: "0.85rem", lineHeight: 1.65, color: t.textSecondary }}>
           {item.desc}
         </p>
       </div>
@@ -451,6 +367,8 @@ function CaseCard({
 
 // ─── Section ──────────────────────────────────────────────────────────────────
 export default function WorkSection() {
+  const { theme } = useTheme();
+  const t = getTokens(theme);
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -474,41 +392,30 @@ export default function WorkSection() {
       <section
         id="work"
         className="py-24 lg:py-32 relative overflow-hidden"
-        style={{ background: "oklch(0.10 0.03 240)" }}
+        style={{ background: t.bgPage }}
       >
         {/* Background image accent */}
         <div
-          className="absolute inset-0 opacity-5"
+          className="absolute inset-0"
           style={{
             backgroundImage: `url(${CASESTUDY_BG})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
+            opacity: theme === "dark" ? 0.05 : 0.03,
           }}
         />
 
         <div className="container relative z-10">
-          {/* Header */}
           <div ref={ref} className="mb-16">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6 }}
-            >
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }}>
               <div className="evo-divider" />
               <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
-                <h2
-                  className="evo-section-title"
-                  style={{ fontSize: "clamp(2.2rem, 4vw, 3.5rem)" }}
-                >
+                <h2 className="evo-section-title" style={{ fontSize: "clamp(2.2rem, 4vw, 3.5rem)", color: t.textPrimary }}>
                   Our Work
                 </h2>
                 <p
-                  className="text-white/55 max-w-md lg:text-right"
-                  style={{
-                    fontFamily: "'Barlow', sans-serif",
-                    fontSize: "0.95rem",
-                    lineHeight: 1.65,
-                  }}
+                  style={{ fontFamily: "'Barlow', sans-serif", fontSize: "0.95rem", lineHeight: 1.65, color: t.textSecondary, maxWidth: "28rem" }}
+                  className="lg:text-right"
                 >
                   Real projects. Real complexity. Real results. Every case below represents
                   a challenge that required expertise, creativity, and execution.
@@ -517,7 +424,6 @@ export default function WorkSection() {
             </motion.div>
           </div>
 
-          {/* Cases Grid */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {cases.map((item, i) => (
               <CaseCard
@@ -525,13 +431,13 @@ export default function WorkSection() {
                 item={item}
                 index={i}
                 onOpenLightbox={openLightbox}
+                t={t}
               />
             ))}
           </div>
         </div>
       </section>
 
-      {/* Lightbox portal */}
       {lightbox && (
         <Lightbox
           photos={lightbox.photos}
