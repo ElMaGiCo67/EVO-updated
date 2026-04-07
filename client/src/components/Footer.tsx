@@ -23,31 +23,31 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-2">
             <div className="flex flex-col items-start gap-0 mb-4">
-              <span
-                className="text-white font-black tracking-widest"
-                style={{
-                  fontFamily: "'Barlow Condensed', sans-serif",
-                  fontSize: "2rem",
-                  lineHeight: 1,
-                  letterSpacing: "0.15em",
-                }}
-              >
-                EVO
-              </span>
+              {/* EVO image-based logo — same as navbar */}
+              <img
+                src="https://static-assets.manus.space/file/webdev-static-assets/evo-letters.png"
+                alt="EVO"
+                style={{ height: "52px", width: "auto", display: "block" }}
+              />
               <div
                 className="w-full h-0.5"
                 style={{
                   background: "oklch(0.82 0.18 200)",
-                  boxShadow: "0 0 8px oklch(0.82 0.18 200 / 80%)",
+                  boxShadow: "0 0 10px oklch(0.82 0.18 200 / 90%)",
+                  marginTop: "2px",
                 }}
               />
               <span
-                className="text-white/40"
                 style={{
                   fontFamily: "'Barlow Condensed', sans-serif",
-                  fontSize: "0.6rem",
-                  letterSpacing: "0.18em",
+                  fontSize: "0.62rem",
+                  letterSpacing: "0.22em",
                   textTransform: "uppercase",
+                  color: "oklch(0.82 0.18 200)",
+                  marginTop: "4px",
+                  display: "block",
+                  textAlign: "center",
+                  width: "100%",
                 }}
               >
                 Maritime Services &amp; Logistics
