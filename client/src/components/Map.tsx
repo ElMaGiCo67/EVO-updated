@@ -138,7 +138,9 @@ export function MapView({
       fullscreenControl: false,
       zoomControl: true,
       streetViewControl: false,
-      // NOTE: mapId intentionally omitted — custom styles via setOptions({ styles }) require no mapId
+      // mapId is required for AdvancedMarkerElement; custom styles are still applied
+      // via setOptions({ styles }) after initialization — this is compatible.
+      mapId: "DEMO_MAP_ID",
     });
     if (onMapReady) {
       onMapReady(map.current);
