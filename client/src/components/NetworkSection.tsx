@@ -1,6 +1,6 @@
 /*
-  EVO Maritime Network Section — Static Map
-  No Google Maps. Uses fully static SVG map component.
+  EVO Maritime Network Section — Leaflet Map
+  Uses CartoDB Dark Matter tiles (free, no API key).
 */
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
@@ -8,7 +8,7 @@ import { useRef, useState } from "react";
 import { MapPin, Phone, Anchor, Ship, Building, Navigation, X, Mail } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { getTokens } from "@/lib/theme-tokens";
-import StaticMap, { locations } from "./StaticMap";
+import LeafletMap, { locations } from "./LeafletMap";
 
 const ICONS: Record<string, React.ElementType> = {
   bulgaria: Anchor,
@@ -101,7 +101,7 @@ export default function NetworkSection() {
               </div>
             )}
           </div>
-          <div className="flex-1"><StaticMap activeId={activeId} onPinClick={handleSelect} /></div>
+          <div className="flex-1" style={{ minHeight: "520px" }}><LeafletMap activeId={activeId} onPinClick={handleSelect} /></div>
         </motion.div>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.5 }} className="mt-8 text-center">
           <p style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: "0.78rem", letterSpacing: "0.2em", textTransform: "uppercase", color: t.textMuted }}>Black Sea · Danube · Adriatic · Mediterranean</p>
