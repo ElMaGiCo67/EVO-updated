@@ -22,32 +22,38 @@ export default function Footer() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <div className="flex flex-col items-start gap-0 mb-4">
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "3px", marginBottom: "1rem" }}>
               {/* EVO image-based logo — same as navbar */}
               <img
                 src="https://d2xsxph8kpxj0f.cloudfront.net/310519663173010095/7NSEthpyvre9erajCMjcgy/evo-letters_cf9113fd.png"
                 alt="EVO"
-                style={{ height: "52px", width: "auto", display: "block" }}
-              />
-              <div
-                className="w-full h-0.5"
                 style={{
-                  background: "oklch(0.82 0.18 200)",
-                  boxShadow: "0 0 10px oklch(0.82 0.18 200 / 90%)",
-                  marginTop: "2px",
+                  height: "52px",
+                  width: "auto",
+                  display: "block",
+                  filter: "drop-shadow(0 0 6px rgba(100,180,255,0.4))",
                 }}
               />
+              {/* Cyan glowing underline bar */}
+              <div
+                style={{
+                  width: "100%",
+                  height: "3px",
+                  background: "linear-gradient(90deg, #00d4ff, #0099cc)",
+                  boxShadow: "0 0 8px rgba(0,212,255,0.9), 0 0 18px rgba(0,212,255,0.5)",
+                  borderRadius: "2px",
+                }}
+              />
+              {/* Centered subtitle */}
               <span
                 style={{
                   fontFamily: "'Barlow Condensed', sans-serif",
-                  fontSize: "0.62rem",
-                  letterSpacing: "0.22em",
+                  fontSize: "0.58rem",
+                  fontWeight: 500,
+                  letterSpacing: "0.18em",
                   textTransform: "uppercase",
-                  color: "oklch(0.82 0.18 200)",
-                  marginTop: "4px",
-                  display: "block",
+                  color: "oklch(0.82 0.18 200 / 80%)",
                   textAlign: "center",
-                  width: "100%",
                 }}
               >
                 Maritime Services &amp; Logistics
