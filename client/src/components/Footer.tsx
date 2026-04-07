@@ -25,7 +25,7 @@ export default function Footer() {
             <div className="flex flex-col items-start gap-0 mb-4">
               {/* EVO image-based logo — same as navbar */}
               <img
-                src="https://static-assets.manus.space/file/webdev-static-assets/evo-letters.png"
+                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663173010095/7NSEthpyvre9erajCMjcgy/evo-letters_cf9113fd.png"
                 alt="EVO"
                 style={{ height: "52px", width: "auto", display: "block" }}
               />
